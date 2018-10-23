@@ -1,49 +1,85 @@
 var time;//背景变暗延时函数
 Component({
   properties: {
+    /**
+     * 图片路径
+     */
     'imgSrc': {
       type: String
     },
+    /**
+     * 剪裁框高度
+     */
     'height': {
       type: Number,
       value: 200
     },
+    /**
+     * 剪裁框宽度
+     */
     'width': {
       type: Number,
       value: 200
     },
+    /**
+     * 生成的图片质量0-1
+     */
     'quality': {
       type: Number,
-      value: 200
+      value: 1
     },
+    /**
+     * canvas上边距（不设置默认不显示）
+     */
     'canvas_top': {
       type: Number,
       value: null
     },
+    /**
+     * canvas左边距（不设置默认不显示）
+     */
     'canvas_left': {
       type: Number,
       value: null
     },
+    /**
+     * 图片宽度
+     */
     'imgWidth': {
       type: null,
       value: null
     },
+    /**
+     * 图片高度
+     */
     'imgHeight': {
       type: null,
       value: null
     },
+    /**
+     * 图片缩放比
+     */
     'scale': {
       type: Number,
       value: 1
     },
+    /**
+     * 图片旋转角度
+     */
     'rotate': {
       type: Number,
       value: 0
     },
+    /**
+     * 最小缩放比
+     */
     'min_scale': {
       type: Number,
       value: 0.5
     },
+    /**
+     * 最大缩放比
+     */
     'max_scale': {
       type: Number,
       value: 2
