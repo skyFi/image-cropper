@@ -5,7 +5,7 @@
 ###### 2.点击中间窗口实时查看剪裁结果。
 ###### 3.使用非常简单，人性化。
 ## 初始准备
-#### 1.JSON文件中添加image-cropper
+#### 1.json文件中添加image-cropper
 	"usingComponents": {
 	    "image-cropper": "../plugin/image-cropper"
 	},
