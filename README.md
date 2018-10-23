@@ -1,5 +1,6 @@
 # image-cropper
 一款人性化的图片剪裁的小程序插件，支持旋转支持旋转支持旋转
+======================
 1.在需要使用插件的JSON文件中添加image-cropper
 "usingComponents": {
     "image-cropper": "../plugin/image-cropper"
