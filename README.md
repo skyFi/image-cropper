@@ -3,7 +3,7 @@
 ----
  #### 1.在需要使用插件的JSON文件中添加image-cropper
 	"usingComponents": {
-		"image-cropper": "../plugin/image-cropper"
+	    "image-cropper": "../plugin/image-cropper"
 	},
  #### 2.wxml文件
 	<image-cropper id="cropper" min_scale="0.3" imgWidth="100%" width="{{width}}" height="{{height}}"></image-croppe ### r>
