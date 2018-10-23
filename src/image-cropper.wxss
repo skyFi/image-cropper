@@ -35,12 +35,11 @@
 }
 .content_middle_middle{
   width:200px;
-  border: 1px dashed rgb(143, 64, 247);
+  border: 1px dashed rgb(3, 136, 14);
   box-sizing:border-box;
 }
 .content_middle_right{
   flex: 1;
-  
 }
 .content>.content_bottom{
   flex: 1;

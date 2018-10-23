@@ -84,6 +84,13 @@ Component({
       type: Number,
       value: 2
     },
+    /**
+     * 是否禁用旋转
+     */
+    'disable_rotate': {
+      type: Number,
+      value: false
+    },
   },
   data: {
     el: 'image-cropper', //暂时无用
@@ -111,7 +118,7 @@ Component({
         that._changeWindowSize();
       },
       canvas_top: function (value, that){
-        if(that.data.canvas_top < -that.data.height || that.data.canvas_top > that.data.info.windowHeight){
+        if(that.data.canvas_top < - that.data.height || that.data.canvas_top > that.data.info.windowHeight){
           that.data.canvas_overflow = true; 
         }else{
           that.data.canvas_overflow = false; 
@@ -147,15 +154,15 @@ Component({
       });
     }
     //如果设置canvas坐标，默认不显示（超出屏幕外）
-    if (this.data.canvas_top && !this.data.canvas_left) {
+    if (this.data.canvas_top != null && this.data.canvas_left == null) {
       this.setData({
         canvas_left: 0
       });
-    } else if (!this.data.canvas_top && this.data.canvas_left) {
+    } else if (this.data.canvas_top == null && this.data.canvas_left != null) {
       this.setData({
         canvas_top: 0
       });
-    } else if (!this.data.canvas_top && !this.data.canvas_left){
+    } else if (this.data.canvas_top == null && this.data.canvas_left == null){
       this.setData({
         canvas_top: -3000
       });
@@ -191,8 +198,8 @@ Component({
     /**
      * 设置图片动画
      * {
-     *    imgTop:10,//图片在原有基础上向下移动10px
-     *    imgLeft:10,//图片在原有基础上向右移动10px
+     *    x:10,//图片在原有基础上向下移动10px
+     *    y:10,//图片在原有基础上向右移动10px
      *    rotate:10,//图片在原有基础上旋转10deg
      *    scale:0.5,//图片在原有基础上增加0.5倍
      * }
@@ -218,7 +225,7 @@ Component({
     /**
      * 上传图片
      */
-    update: function () {
+    upload: function () {
       let that = this;
       wx.chooseImage({
         count: 1,
@@ -233,7 +240,7 @@ Component({
     /**
      * 设置剪裁框宽度
      */
-    width: function (width) {
+    setWidth: function (width) {
       this.setData({
         width: width
       });
@@ -242,7 +249,7 @@ Component({
     /**
      * 设置剪裁框高度
      */
-    height: function (height) {
+    setHeight: function (height) {
       this.setData({
         height: height
       });
@@ -271,8 +278,9 @@ Component({
             imgHeight = res.height / res.width * this.data.init_imgWidth;
           }
           this.setData({
+            imgSrc: res.path,
             imgWidth: imgWidth,
-            imgHeight: imgHeight
+            imgHeight: imgHeight,
           });
           this._draw();
         },
@@ -288,8 +296,8 @@ Component({
      */
     setScale: function (scale) {
       if (!scale) return;
-      scale = scale <= this.data.min_scale ? this.data.min_scale : scale;
-      scale = scale >= this.data.max_scale ? this.data.max_scale : scale;
+      // scale = scale <= this.data.min_scale ? this.data.min_scale : scale;
+      // scale = scale >= this.data.max_scale ? this.data.max_scale : scale;
       this.setData({
         scale: scale.toFixed(3)
       });
@@ -390,10 +398,11 @@ Component({
         let width = Math.abs(event.touches[0].clientX - event.touches[1].clientX),
           height = Math.abs(event.touches[0].clientY - event.touches[1].clientY),
           hypotenuse = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2)),
-          scale = this.data.scale * (hypotenuse / this.data.first_Hypotenuse);
+          scale = this.data.scale * (hypotenuse / this.data.first_Hypotenuse),
+          current_deg = 0;
         scale = scale <= this.data.min_scale ? this.data.min_scale : scale;
         scale = scale >= this.data.max_scale ? this.data.max_scale : scale;
-        //双指旋转
+        //双指旋转(如果没禁用旋转)
         let touch_img_relative = [{
           x: this.data.imgWidth - (this.data.imgLeft + this.data.imgWidth - event.touches[0].clientX),
           y: this.data.imgHeight - (this.data.imgTop + this.data.imgHeight - event.touches[0].clientY)
@@ -401,18 +410,19 @@ Component({
           x: this.data.imgWidth - (this.data.imgLeft + this.data.imgWidth - event.touches[1].clientX),
           y: this.data.imgHeight - (this.data.imgTop + this.data.imgHeight - event.touches[1].clientY)
         }];
-        let first_atan = 180 / Math.PI * Math.atan2(touch_img_relative[0].y, touch_img_relative[0].x);
-        let first_atan_old = 180 / Math.PI * Math.atan2(this.data.touch_img_relative[0].y, this.data.touch_img_relative[0].x);
-        let second_atan = 180 / Math.PI * Math.atan2(touch_img_relative[1].y, touch_img_relative[1].x);
-        let second_atan_old = 180 / Math.PI * Math.atan2(this.data.touch_img_relative[1].y, this.data.touch_img_relative[1].x);
-        //当前旋转的角度
-        let first_deg = first_atan - first_atan_old,
-          second_deg = second_atan - second_atan_old,
-          current_deg = 0;
-        if (first_deg != 0) {
-          current_deg = first_deg;
-        } else if (second_deg != 0) {
-          current_deg = second_deg;
+        if (!this.data.disable_rotate){
+          let first_atan = 180 / Math.PI * Math.atan2(touch_img_relative[0].y, touch_img_relative[0].x);
+          let first_atan_old = 180 / Math.PI * Math.atan2(this.data.touch_img_relative[0].y, this.data.touch_img_relative[0].x);
+          let second_atan = 180 / Math.PI * Math.atan2(touch_img_relative[1].y, touch_img_relative[1].x);
+          let second_atan_old = 180 / Math.PI * Math.atan2(this.data.touch_img_relative[1].y, this.data.touch_img_relative[1].x);
+          //当前旋转的角度
+          let first_deg = first_atan - first_atan_old,
+              second_deg = second_atan - second_atan_old;
+          if (first_deg != 0) {
+            current_deg = first_deg;
+          } else if (second_deg != 0) {
+            current_deg = second_deg;
+          }
         }
         this.setData({
           rotate: this.data.rotate + current_deg,
@@ -438,7 +448,7 @@ Component({
     //点击中间剪裁框处理
     _click: function (event) {
       if (!this.data.imgSrc) {
-        this.update();
+        this.upload();
         return;
       }
       this._draw();
