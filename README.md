@@ -43,4 +43,4 @@
 | setRotate     |  deg   	   |   无    |设置图片旋转角度|是|
 | setTransform  |{x,y,rotate,scale}|   无    |图片在原有基础上的变化(scale受min_scale、max_scale影响)|根据需要传参|
 ## 体验Demo
-![image](https://raw.githubusercontent.com/1977474741/image-cropper/dev/image/code.jpg)
+<div align=center ><img width="150" height="150" src="https://raw.githubusercontent.com/1977474741/image-cropper/dev/image/code.jpg"/></div>
