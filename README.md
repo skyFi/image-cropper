@@ -10,7 +10,7 @@
 	    "image-cropper": "../plugin/image-cropper"
 	},
 #### 2.wxml文件
-	<image-cropper id="cropper" min_scale="0.3" imgWidth="100%" width="{{width}}" height="{{height}}"></image-cropper>
+	<image-cropper id="cropper" min_scale="0.3" imgWidth="100%"></image-cropper>
 #### 3.wxss文件末尾
 	@import '../plugin/image-cropper.wxss'  
 #### 4.获取image-cropper对象
