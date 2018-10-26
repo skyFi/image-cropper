@@ -10,7 +10,7 @@
 			"image-cropper": "../plugin/image-cropper"
 	},
 #### 2.wxml文件
-	<image-cropper id="cropper" min_scale="0.3" imgWidth="100%"></image-cropper>
+	<image-cropper id="cropper" min_scale="0.3" imgSrc="{{src}}" imgWidth="100%"></image-cropper>
 #### 3.wxss文件末尾
 	@import '../plugin/image-cropper.wxss'  
 #### 4.获取image-cropper对象
@@ -53,5 +53,9 @@
 | setScale      |  scale   	   |   无    |设置图片缩放比例（不受min_scale、max_scale影响）|是|
 | setRotate     |  deg   	   |   无    |设置图片旋转角度|是|
 | setTransform  |{x,y,rotate,scale}|   无    |图片在原有基础上的变化(scale受min_scale、max_scale影响)|根据需要传参|
+## 事件说明
+| 事件名         | 参数   	       | 返回值  |描述|参数必填|
+| ------------- |:------:	   |:------:|:------:|:------:|
+| clickCallback |  Function(回调函数)  |   无   |用户点击中间裁剪框的回调|是|
 <h2 align = "center" style="">体验Demo</h2>
 <div align=center ><img width="250" height="250" src="https://raw.githubusercontent.com/1977474741/image-cropper/dev/image/code.jpg?v=0"/></div>
