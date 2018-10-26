@@ -20,11 +20,11 @@
 	});
 	//点击裁剪框回调
 	this.cropper.clickCallback((url)=>{
-		//图片预览
-		wx.previewImage({
-			current: url, // 当前显示图片的http链接
-			urls: [url] // 需要预览的图片http链接列表
-		})
+	//图片预览
+	wx.previewImage({
+		current: url, // 当前显示图片的http链接
+		urls: [url] // 需要预览的图片http链接列表
+	})
 	}) 
 ## 参数说明
 | 属性           | 类型   | 缺省值  | 取值  | 描述  | 必填 |
