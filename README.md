@@ -56,6 +56,6 @@
 ## 事件说明
 | 事件名         | 参数   	       | 返回值  |描述|参数必填|
 | ------------- |:------:	   |:------:|:------:|:------:|
-| clickCallback |  Function(回调函数)  |   无   |用户点击中间裁剪框的回调|是|
+| clickCallback |Function(回调函数)|src(当前裁剪后的图片地址) |用户点击中间裁剪框|是|
 <h2 align = "center" style="">体验Demo</h2>
 <div align=center ><img width="250" height="250" src="https://raw.githubusercontent.com/1977474741/image-cropper/dev/image/code.jpg?v=0"/></div>
