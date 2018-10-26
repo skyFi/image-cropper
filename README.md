@@ -14,7 +14,18 @@
 #### 3.wxss文件末尾
 	@import '../plugin/image-cropper.wxss'  
 #### 4.获取image-cropper对象
-	this.cropper = this.selectComponent("#cropper"); 
+	this.cropper = this.selectComponent("#cropper");
+	this.setData({
+		src:"https://raw.githubusercontent.com/1977474741/image-cropper/dev/image/code.jpg",
+	});
+	//点击裁剪框回调
+	this.cropper.clickCallback((url)=>{
+		//图片预览
+		wx.previewImage({
+			current: url, // 当前显示图片的http链接
+			urls: [url] // 需要预览的图片http链接列表
+		})
+	}) 
 ## 参数说明
 | 属性           | 类型   | 缺省值  | 取值  | 描述  | 必填 |
 | ------------- |:------:|:------:|:-----:|:-----:|:-----:|
