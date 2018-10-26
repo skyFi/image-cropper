@@ -130,6 +130,9 @@ Component({
         } else {
           that.data.canvas_overflow = false;
         }
+      },
+      imgSrc: function (value, that){
+        that._changeWindowSize();
       }
     }
   },
@@ -464,7 +467,7 @@ Component({
           quality: this.data.quality,
           canvasId: this.data.el,
           success: (res) => {
-            this._clickCallback(res.tempFilePath);
+            this._clickCallback && this._clickCallback(res.tempFilePath);
           }
         }, this)
       }
