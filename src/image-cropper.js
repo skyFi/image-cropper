@@ -132,16 +132,13 @@ Component({
         }
       },
       imgSrc: function (value, that){
-        that._changeWindowSize();
+        that._changeWindowSize(true);
       },
-      // disable_rotate:function(value,that){
-      //   that.data.disable_rotate = value;
-      // }
     }
   },
   attached: function() {
     this._watcher(); //启用数据监听
-    this._changeWindowSize(); //设置截取框大小、绘制canvas
+    this._changeWindowSize(true); //设置截取框大小、绘制canvas
     this.data.init_imgWidth = this.data.imgWidth;
     this.data.init_imgHeight = this.data.imgHeight;
     //处理宽高特殊单位
@@ -335,17 +332,24 @@ Component({
         this._draw();
       }
     },
-    _init: function() {
+    _init: function(flag) {
+      //flag-是否需要重新处理图片
       //初始化canvas
-      this.data.ctx = wx.createCanvasContext(this.data.el, this);
+      if (!this.data.ctx){
+        this.data.ctx = wx.createCanvasContext(this.data.el, this);
+      }
       this.data.ctx.width = this.data.width;
       this.data.ctx.height = this.data.height;
       if (this.data.imgSrc) {
-        this.pushImg();
+        if (flag){
+          this.pushImg();
+        }else{
+          this._draw();
+        }
       }
     },
     //改变截取框大小
-    _changeWindowSize: function () {
+    _changeWindowSize: function (flag) {//flag-是否需要重新处理图片
       if (this.data.width > this.data.info.windowWidth) {
         this.setData({
           width: this.data.info.windowWidth,
@@ -360,7 +364,7 @@ Component({
         cut_top: (this.data.info.windowHeight - this.data.height) * 0.5, //截取的框上边距
         cut_left: (this.data.info.windowWidth - this.data.width) * 0.5, //截取的框左边距
       });
-      this._init();
+      this._init(flag);//不需要重新添加图片
     },
     //开始触摸
     _start: function(event) {
