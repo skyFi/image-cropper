@@ -34,8 +34,8 @@
 | width 	| Number | 200      |超过屏幕宽度自动转为屏幕宽度|裁剪框宽度|否|
 | height        | Number | 200      |超过屏幕高度自动转为屏幕高度|裁剪框高度|否|
 | quality 	| Number | 1        |0-1|生成的图片质量|否|
-| cut_top 	| Number | 居中     |无限制 |裁剪框上边距|否|
-| cut_left 	| Number | 居中     |无限制 |裁剪框上边距|否|
+| cut_top 	| Number | 居中     |始终在屏幕内 |裁剪框上边距|否|
+| cut_left 	| Number | 居中     |始终在屏幕内 |裁剪框左边距|否|
 | canvas_top 	| Number | -3000    |无限制(默认不显示-超出屏幕外) |canvas上边距|否|
 | canvas_left 	| Number | 0        |无限制(默认不显示-超出屏幕外) |canvas左边距|否|
 | imgWidth 	| Number | 图片的原宽度 |支持%(不加单位为px)(只设置宽度，高度自适应)|图片宽度|否|
