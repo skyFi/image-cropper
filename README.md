@@ -34,6 +34,8 @@
 | width 	| Number | 200      |超过屏幕宽度自动转为屏幕宽度|裁剪框宽度|否|
 | height        | Number | 200      |超过屏幕高度自动转为屏幕高度|裁剪框高度|否|
 | quality 	| Number | 1        |0-1|生成的图片质量|否|
+| cut_top 	| Number | 居中     |无限制 |裁剪框上边距|否|
+| cut_left 	| Number | 居中     |无限制 |裁剪框上边距|否|
 | canvas_top 	| Number | -3000    |无限制(默认不显示-超出屏幕外) |canvas上边距|否|
 | canvas_left 	| Number | 0        |无限制(默认不显示-超出屏幕外) |canvas左边距|否|
 | imgWidth 	| Number | 图片的原宽度 |支持%(不加单位为px)(只设置宽度，高度自适应)|图片宽度|否|
@@ -52,7 +54,7 @@
 | setHeight     |  height   	   |   无    |设置裁剪框高度|是|
 | setScale      |  scale   	   |   无    |设置图片缩放比例（不受min_scale、max_scale影响）|是|
 | setRotate     |  deg   	   |   无    |设置图片旋转角度|是|
-| setTransform  |{x,y,rotate,scale}|   无    |图片在原有基础上的变化(scale受min_scale、max_scale影响)|根据需要传参|
+| setTransform  |{x,y,rotate,scale,cutX,cutY}|   无    |图片在原有基础上的变化(scale受min_scale、max_scale影响)|根据需要传参|
 ## 事件说明
 | 事件名         | 参数   	       | 返回值  |描述|参数必填|
 | ------------- |:------:	   |:------:|:------:|:------:|
