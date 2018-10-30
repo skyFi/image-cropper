@@ -1,9 +1,17 @@
+.image-cropper{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index: 1;
+}
 .main{
   position: absolute;
   width:100vw;
   height:100vh;
   overflow: hidden;
-  background: #000;
+  /* background: #000; */
 }
 .content{
   z-index: 9;
@@ -48,6 +56,7 @@
   position: absolute;
   border:none;
   width:100%;
+  backface-visibility: hidden;
 }
 .image-cropper-canvas{
   position: absolute;

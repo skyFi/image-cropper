@@ -88,7 +88,7 @@ Component({
      * 是否禁用旋转
      */
     'disable_rotate': {
-      type: Number,
+      type: Boolean,
       value: false
     },
   },
@@ -133,7 +133,10 @@ Component({
       },
       imgSrc: function (value, that){
         that._changeWindowSize();
-      }
+      },
+      // disable_rotate:function(value,that){
+      //   that.data.disable_rotate = value;
+      // }
     }
   },
   attached: function() {
@@ -209,6 +212,7 @@ Component({
      */
     setTransform: function (transform) {
       if (!transform) return;
+      console.log(this.data.rotate);
       var scale = this.data.scale;
       if (transform.scale) {
         scale = this.data.scale + transform.scale;
@@ -218,8 +222,8 @@ Component({
       this.setData({
         imgTop: transform.y ? this.data.imgTop + transform.y : this.data.imgTop,
         imgLeft: transform.x ? this.data.imgLeft + transform.x : this.data.imgLeft,
-        rotate: (transform.rotate ? this.data.rotate + transform.rotate : transform.rotate).toFixed(2),
-        scale: scale.toFixed(3)
+        rotate: transform.rotate ? this.data.rotate + transform.rotate : this.data.rotate,
+        scale: scale
       });
       if (!this.data.canvas_overflow){
         this._draw();
@@ -258,6 +262,9 @@ Component({
       });
       this._changeWindowSize();
     },
+    setDisableRotate(value){
+      this.data.disable_rotate = value;
+    },
     /**
      * 加载（更换）图片
      */
@@ -280,11 +287,19 @@ Component({
           } else if (this.data.init_imgWidth) {
             imgHeight = res.height / res.width * this.data.init_imgWidth;
           }
-          this.setData({
-            imgSrc: res.path,
-            imgWidth: imgWidth,
-            imgHeight: imgHeight,
-          });
+          //图片非本地路径需要换成本地路径
+          if (this.data.imgSrc.search(/tmp/) == -1){
+            this.setData({
+              imgSrc: res.path,
+              imgWidth: imgWidth,
+              imgHeight: imgHeight,
+            });
+          }else{
+            this.setData({
+              imgWidth: imgWidth,
+              imgHeight: imgHeight,
+            });
+          }
           this._draw();
         },
         fail: (err) => {
