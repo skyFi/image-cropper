@@ -1,4 +1,4 @@
-var time;//背景变暗延时函数
+var time;//背景变暗延时函数 
 Component({
   properties: {
     /**
