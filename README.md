@@ -52,6 +52,7 @@
 | getImg        |Function(回调函数) |   src  |获取裁剪之后的图片路径|是|
 | setWidth     	|  width   	   |   无    |设置裁剪框宽度|是|
 | setHeight     |  height   	   |   无    |设置裁剪框高度|是|
+| cutCenter     |  无   	   	  |   无    |设置裁剪框居中|否|
 | setScale      |  scale   	   |   无    |设置图片缩放比例（不受min_scale、max_scale影响）|是|
 | setRotate     |  deg   	   |   无    |设置图片旋转角度|是|
 | setTransform  |{x,y,rotate,scale,cutX,cutY}|   无    |图片在原有基础上的变化(scale受min_scale、max_scale影响)|根据需要传参|
