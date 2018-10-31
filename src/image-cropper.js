@@ -28,6 +28,14 @@ Component({
       type: Number,
       value: 1
     },
+    'cut_top': {
+      type: Number,
+      value: null
+    },
+    'cut_left': {
+      type: Number,
+      value: null
+    },
     /**
      * canvas上边距（不设置默认不显示）
      */
@@ -134,6 +142,32 @@ Component({
       imgSrc: function (value, that){
         that._changeWindowSize(true);
       },
+      cut_top: function (value, that) {
+        if (that.data.cut_top < 0) {
+          that.setData({
+            cut_top: 0
+          });
+        }
+        if (that.data.cut_top > that.data.info.windowHeight - that.data.height){
+          that.setData({
+            cut_top: that.data.info.windowHeight - that.data.height
+          });
+        }
+        that._changeWindowSize();
+      },
+      cut_left: function (value, that) {
+        if (that.data.cut_left < 0) {
+          that.setData({
+            cut_left: 0
+          });
+        }
+        if (that.data.cut_left > that.data.info.windowWidth - that.data.width) {
+          that.setData({
+            cut_left: that.data.info.windowWidth - that.data.width
+          });
+        }
+        that._changeWindowSize();
+      }
     }
   },
   attached: function() {
@@ -156,7 +190,19 @@ Component({
         init_imgHeight: this.data.info.windowHeight / 100 * height
       });
     }
-    //如果设置canvas坐标，默认不显示（超出屏幕外）
+    //裁剪框坐标处理（如果只写一个参数则另一个默认为0，都不写默认居中）
+    if (this.data.cut_top == null && this.data.cut_left == null) {
+      this.cutCenter();
+    } else if (this.data.cut_top != null && this.data.cut_left == null){
+      this.setData({
+        cut_left: 0, //截取的框左边距
+      });
+    } else if (this.data.cut_top == null && this.data.cut_left != null){
+      this.setData({
+        cut_top: 0, //截取的框左边距
+      });
+    }
+    //canvas坐标处理（如果只写一个参数则另一个默认为0，都不写默认超出屏幕外）
     if (this.data.canvas_top != null && this.data.canvas_left == null) {
       this.setData({
         canvas_left: 0
@@ -170,8 +216,12 @@ Component({
         canvas_top: -3000
       });
     }
-    this.data.watch.canvas_top(null,this);
+    //校验canvas是否超出屏幕外
+    this.data.watch.canvas_top(null, this);
     this.data.watch.canvas_left(null, this);
+    //校验裁剪框是否超出屏幕外
+    this.data.watch.cut_top(null, this);
+    this.data.watch.cut_left(null, this);
   },
   methods: {
     /**
@@ -209,12 +259,25 @@ Component({
      */
     setTransform: function (transform) {
       if (!transform) return;
-      console.log(this.data.rotate);
       var scale = this.data.scale;
       if (transform.scale) {
         scale = this.data.scale + transform.scale;
         scale = scale <= this.data.min_scale ? this.data.min_scale : scale;
         scale = scale >= this.data.max_scale ? this.data.max_scale : scale;
+      }
+      let cutX = this.data.cut_left;
+      let cutY = this.data.cut_top;
+      if (transform.cutX){
+        this.setData({
+          cut_left: cutX + transform.cutX
+        });
+        this.data.watch.cut_left(null, this);
+      }
+      if (transform.cutY){
+        this.setData({
+          cut_top: cutY + transform.cutY
+        });
+        this.data.watch.cut_top(null, this);
       }
       this.setData({
         imgTop: transform.y ? this.data.imgTop + transform.y : this.data.imgTop,
@@ -222,6 +285,7 @@ Component({
         rotate: transform.rotate ? this.data.rotate + transform.rotate : this.data.rotate,
         scale: scale
       });
+      
       if (!this.data.canvas_overflow){
         this._draw();
       }
@@ -240,6 +304,12 @@ Component({
           that.pushImg(tempFilePaths);
         }
       })
+    },
+    cutCenter(){
+      this.setData({
+        cut_top: (this.data.info.windowHeight - this.data.height) * 0.5, //截取的框上边距
+        cut_left: (this.data.info.windowWidth - this.data.width) * 0.5, //截取的框左边距
+      });
     },
     /**
      * 设置剪裁框宽度
@@ -360,10 +430,6 @@ Component({
           height: this.data.info.windowHeight,
         });
       }
-      this.setData({
-        cut_top: (this.data.info.windowHeight - this.data.height) * 0.5, //截取的框上边距
-        cut_left: (this.data.info.windowWidth - this.data.width) * 0.5, //截取的框左边距
-      });
       this._init(flag);//不需要重新添加图片
     },
     //开始触摸
