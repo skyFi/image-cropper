@@ -28,9 +28,9 @@
 .bg_gray{
   background: rgba(0, 0, 0, 0.55);
   transition-duration: .5s;
+  transition-property:background;
 }
 .content>.content_top{
-  flex: 1;
   pointer-events:none;
 }
 .content>.content_middle{
@@ -38,19 +38,16 @@
   height: 200px;
   width:100%;
 }
-.content_middle_left{
-  flex: 1;
-}
 .content_middle_middle{
   width:200px;
   border: 1px dashed rgb(3, 136, 14);
   box-sizing:border-box;
 }
 .content_middle_right{
-  flex: 1;
+  flex: auto;
 }
 .content>.content_bottom{
-  flex: 1;
+  flex: auto;
 }
 .image-cropper .img{
   position: absolute;
